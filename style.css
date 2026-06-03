@@ -29,7 +29,8 @@ body {
   flex: 0 0 auto;
   display: flex;
   align-items: center;
-  gap: 12px;
+  flex-wrap: wrap;
+  gap: 8px 12px;
   padding: 8px 14px;
   background: var(--bar);
   border-bottom: 1px solid var(--border);
@@ -87,6 +88,39 @@ body {
 }
 #raw-link:hover { color: var(--accent); }
 
+/* ---- responsive: stack the toolbar on narrow screens ---- */
+@media (max-width: 640px) {
+  #bar {
+    padding: 8px 10px;
+  }
+  #brand {
+    font-size: 15px;
+  }
+  /* Form drops to its own full-width line below brand + raw-link. */
+  #form {
+    order: 3;
+    flex: 1 1 100%;
+    flex-wrap: wrap;
+  }
+  #gist-input {
+    flex: 1 1 100%;
+  }
+  #file-input {
+    flex: 1 1 120px;
+  }
+  #form button {
+    flex: 0 0 auto;
+  }
+  #raw-link {
+    margin-left: auto; /* push to the right of the brand row */
+  }
+  /* 16px inputs prevent iOS Safari from zooming in on focus. */
+  #form input,
+  #form button {
+    font-size: 16px;
+  }
+}
+
 /* ---- main ---- */
 #main {
   flex: 1 1 auto;
@@ -111,6 +145,13 @@ body {
 #landing h1 { font-size: 38px; margin: 0 0 8px; }
 #landing p { color: var(--muted); line-height: 1.6; }
 #landing .hint { font-size: 14px; }
+#landing code { word-break: break-all; }
+
+@media (max-width: 640px) {
+  #landing { padding: 40px 20px; }
+  #landing h1 { font-size: 28px; }
+  #status { padding: 40px 20px; }
+}
 
 code {
   background: var(--bar);
