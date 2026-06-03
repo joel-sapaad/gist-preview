@@ -24,43 +24,27 @@ body {
   color: var(--text);
 }
 
-/* ---- top bar ---- */
-#bar {
-  flex: 0 0 auto;
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 8px 12px;
-  padding: 8px 14px;
-  background: var(--bar);
-  border-bottom: 1px solid var(--border);
-}
-
-#brand {
-  font-weight: 600;
-  color: var(--text);
-  text-decoration: none;
-  white-space: nowrap;
-}
-
+/* ---- home page search form ---- */
 #form {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 8px;
-  flex: 1 1 auto;
-  min-width: 0;
+  margin: 28px auto 8px;
 }
 
-#gist-input { flex: 1 1 auto; min-width: 0; }
-#file-input { flex: 0 1 160px; min-width: 0; }
+#gist-input { flex: 1 1 320px; min-width: 0; }
+#file-input { flex: 1 1 160px; min-width: 0; }
 
 #form input {
-  padding: 6px 10px;
+  padding: 10px 12px;
   background: var(--field);
   color: var(--text);
   border: 1px solid var(--border);
-  border-radius: 6px;
-  font-size: 14px;
+  border-radius: 8px;
+  font-size: 16px; /* 16px stops iOS Safari zoom-on-focus */
   font-family: inherit;
+  text-align: left;
 }
 #form input:focus {
   outline: none;
@@ -68,58 +52,18 @@ body {
 }
 
 #form button {
-  padding: 6px 16px;
+  flex: 0 0 auto;
+  padding: 10px 20px;
   background: var(--accent);
   color: var(--accent-fg);
   border: none;
-  border-radius: 6px;
-  font-size: 14px;
+  border-radius: 8px;
+  font-size: 16px;
   font-weight: 600;
   cursor: pointer;
   white-space: nowrap;
 }
 #form button:hover { filter: brightness(1.1); }
-
-#raw-link {
-  color: var(--muted);
-  font-size: 13px;
-  text-decoration: none;
-  white-space: nowrap;
-}
-#raw-link:hover { color: var(--accent); }
-
-/* ---- responsive: stack the toolbar on narrow screens ---- */
-@media (max-width: 640px) {
-  #bar {
-    padding: 8px 10px;
-  }
-  #brand {
-    font-size: 15px;
-  }
-  /* Form drops to its own full-width line below brand + raw-link. */
-  #form {
-    order: 3;
-    flex: 1 1 100%;
-    flex-wrap: wrap;
-  }
-  #gist-input {
-    flex: 1 1 100%;
-  }
-  #file-input {
-    flex: 1 1 120px;
-  }
-  #form button {
-    flex: 0 0 auto;
-  }
-  #raw-link {
-    margin-left: auto; /* push to the right of the brand row */
-  }
-  /* 16px inputs prevent iOS Safari from zooming in on focus. */
-  #form input,
-  #form button {
-    font-size: 16px;
-  }
-}
 
 /* ---- main ---- */
 #main {

@@ -17,9 +17,10 @@ https://<you>.github.io/gist-preview/<gist_id>/login.html
 ```
 
 If the file is omitted it renders `index.html`, or the first `*.html` file in the
-gist. You can also paste a gist id or a full `gist.github.com` URL into the box at the
-top. The legacy `?id=<gist_id>&file=<name>` query form still works — it redirects to
-the clean path.
+gist. When no gist id is in the URL, a home page is shown with a box where you can
+paste a gist id or a full `gist.github.com` URL; once a gist is loaded it fills the
+whole window (no toolbar). The legacy `?id=<gist_id>&file=<name>` query form still
+works — it redirects to the clean path.
 
 ## How it works
 

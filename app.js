@@ -41,14 +41,12 @@
   // ---- DOM handles ----
   const $ = (id) => document.getElementById(id);
   const els = {
-    brand: $("brand"),
     form: $("form"),
     gistInput: $("gist-input"),
     fileInput: $("file-input"),
     landing: $("landing"),
     status: $("status"),
     frame: $("frame"),
-    rawLink: $("raw-link"),
   };
 
   // Blob URLs created for the current render; revoked when we render again.
@@ -155,7 +153,6 @@
     els.status.hidden = true;
     els.frame.hidden = true;
     els.landing.hidden = false;
-    els.rawLink.hidden = true;
   }
 
   // ---- fetching ----
@@ -349,13 +346,9 @@
     liveBlobs = [];
 
     try {
-      const { files, meta } = await fetchGist(id);
+      const { files } = await fetchGist(id);
       // A newer navigation may have superseded this one mid-fetch.
       if (currentId !== id) return;
-
-      els.rawLink.href = meta.html_url || `https://gist.github.com/${id}`;
-      els.rawLink.hidden = false;
-      els.gistInput.value = id;
 
       if (!Object.keys(files).length) return showError("This gist has no files.");
 
@@ -364,7 +357,6 @@
         const list = Object.keys(files).map((n) => `<code>${escapeHtml(n)}</code>`).join(", ");
         return showError(`No HTML file to preview. Files in this gist: ${list}`);
       }
-      els.fileInput.value = entry.toLowerCase() === "index.html" ? "" : entry;
 
       const out = rewriteHtml(files[entry].content, files, id);
       const docUrl = newBlob(out, "text/html") + (frag || "");
@@ -407,20 +399,10 @@
       // Normalise old ?id=/#id links to the clean path, then render.
       return navigate(id, file, true, frag);
     }
-    els.gistInput.value = id;
-    els.fileInput.value = file && file.toLowerCase() !== "index.html" ? file : "";
     render(id, file, frag);
   }
 
   // ---- wire up ----
-  els.brand.setAttribute("href", BASE.href);
-  els.brand.addEventListener("click", (e) => {
-    if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey) return;
-    e.preventDefault();
-    history.pushState(null, "", BASE.pathname);
-    showLanding();
-  });
-
   els.form.addEventListener("submit", (e) => {
     e.preventDefault();
     const id = extractId(els.gistInput.value);
