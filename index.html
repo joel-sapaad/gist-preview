@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gist Preview</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <header id="bar">
+    <a id="brand" href="./">⚡ Gist Preview</a>
+    <form id="form">
+      <input id="gist-input" type="text" placeholder="Gist ID or URL" autocomplete="off" spellcheck="false" />
+      <input id="file-input" type="text" placeholder="file (optional)" autocomplete="off" spellcheck="false" />
+      <button type="submit">Preview</button>
+    </form>
+    <a id="raw-link" href="#" target="_blank" rel="noopener" hidden>view on gist ↗</a>
+  </header>
+
+  <main id="main">
+    <section id="landing">
+      <h1>⚡ Gist Preview</h1>
+      <p>Render any GitHub Gist as a live web page.</p>
+      <p class="hint">
+        Pass a gist id in the URL:
+        <code>?id=&lt;gist_id&gt;</code>
+        or paste one above.
+      </p>
+      <p class="hint">
+        It loads <code>index.html</code> (or the first HTML file) and resolves
+        links, scripts, styles and images that reference other files in the gist.
+      </p>
+    </section>
+
+    <section id="status" hidden></section>
+
+    <iframe id="frame" title="gist preview"
+            sandbox="allow-scripts allow-forms allow-popups allow-modals allow-same-origin allow-top-navigation-by-user-activation"
+            hidden></iframe>
+  </main>
+
+  <script src="./app.js"></script>
+</body>
+</html>
