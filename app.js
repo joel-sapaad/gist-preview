@@ -346,7 +346,7 @@
     liveBlobs = [];
 
     try {
-      const { files } = await fetchGist(id);
+      const { files, meta } = await fetchGist(id);
       // A newer navigation may have superseded this one mid-fetch.
       if (currentId !== id) return;
 
@@ -374,7 +374,9 @@
       els.landing.hidden = true;
       els.status.hidden = true;
       els.frame.hidden = false;
-      document.title = `${entry} — Gist Preview`;
+      // Title bar: gist description + file name (fall back to file name alone).
+      const desc = (meta && meta.description || "").trim();
+      document.title = desc ? `${desc} — ${entry}` : entry;
     } catch (err) {
       if (currentId === id) showError(err.message || String(err));
     }
