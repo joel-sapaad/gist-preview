@@ -415,5 +415,33 @@
 
   window.addEventListener("popstate", () => route());
 
+  // ---- print support ----
+  // The previewed gist lives in a full-viewport iframe with a fixed height, so a
+  // normal print would clip it to one screen. Before printing, expand the iframe
+  // to its content's full height (it's same-origin, so we can measure it) so the
+  // whole gist lays out in flow and paginates; restore afterwards.
+  function expandFrameForPrint() {
+    if (els.frame.hidden) return;
+    try {
+      const d = els.frame.contentDocument;
+      const h = d && d.documentElement ? d.documentElement.scrollHeight : 0;
+      if (h) els.frame.style.height = h + "px";
+    } catch (e) {
+      /* cross-origin: nothing we can do, browser prints what it can */
+    }
+  }
+  function restoreFrameHeight() {
+    els.frame.style.height = "";
+  }
+  window.addEventListener("beforeprint", expandFrameForPrint);
+  window.addEventListener("afterprint", restoreFrameHeight);
+  // Safari/older browsers: drive the same hooks off the print media query.
+  if (window.matchMedia) {
+    const mq = window.matchMedia("print");
+    const onChange = (m) => (m.matches ? expandFrameForPrint() : restoreFrameHeight());
+    if (mq.addEventListener) mq.addEventListener("change", onChange);
+    else if (mq.addListener) mq.addListener(onChange);
+  }
+
   route();
 })();

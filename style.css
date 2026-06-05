@@ -128,3 +128,26 @@ code {
   animation: spin 0.8s linear infinite;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
+
+/* ---- print: let the whole gist flow across pages ---- */
+@media print {
+  html, body {
+    height: auto;
+    background: #fff;
+  }
+  body { display: block; }
+  /* Don't print the app's own home page / status screens. */
+  #landing, #status { display: none !important; }
+  #main {
+    position: static;
+    height: auto;
+    min-height: 0;
+    overflow: visible;
+  }
+  /* JS sets an explicit pixel height before printing so all the gist content
+     is laid out in flow and paginates instead of being clipped to one screen. */
+  #frame {
+    height: auto;
+    border: 0;
+  }
+}
